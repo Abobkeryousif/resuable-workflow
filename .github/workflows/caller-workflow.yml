@@ -1,0 +1,22 @@
+name: caller workflow
+on:
+    workflow_dispatch: 
+
+jobs:
+    do-it:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v5
+        
+            - name: run one line script
+              run: echo hello, world!
+
+    docker: 
+        uses: Abobkeryousif/resuable-workflow/.github/workflows/build-publish-docker.yml@main
+        with:
+            image-name: my-awesome-app
+            tag: ${{ github.sha }}
+
+        secrets:
+            registery_username: ${{ secrets.REGISTERY_USERNAME }}
+            registery_password: ${{ secrets.REGISTERY_PASSWORD }}
